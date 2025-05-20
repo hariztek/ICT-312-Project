@@ -33,40 +33,65 @@ CREATE TABLE order_items (
     FOREIGN KEY (product_id) REFERENCES products(product_id) ON DELETE RESTRICT
 );
 
+----added these----
+
+CREATE TABLE carts (
+    cart_id INT PRIMARY KEY AUTO_INCREMENT,
+    customer_id INT,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (customer_id) REFERENCES customers(customer_id) ON DELETE CASCADE
+);
+
+---added these----
+CREATE TABLE cart_items (
+    cart_item_id INT PRIMARY KEY AUTO_INCREMENT,
+    cart_id INT,
+    product_id INT,
+    quantity INT NOT NULL DEFAULT 1,
+    FOREIGN KEY (cart_id) REFERENCES carts(cart_id) ON DELETE CASCADE,
+    FOREIGN KEY (product_id) REFERENCES products(product_id) ON DELETE CASCADE
+);
+
+
 -- Insert Sample Data into Customers Table
 INSERT INTO customers (email, password) VALUES
 ('user1', 'user1'),
 ('user2', 'user2'),
 ('admin', 'admin');
 
--- Insert Sample Data into Products Table (8 for Category 1, 8 for Category 2)
-INSERT INTO products (photo, name, price) VALUES
--- Category 1 Products
-('c1_1.jpg', 'c1_1 name', 150.00),
-('c1_2.jpg', 'c1_2 name', 200.00),
-('c1_3.jpg', 'c1_3 name', 180.00),
-('c1_4.jpg', 'c1_4 name', 300.00),
-('c1_5.jpg', 'c1_5 name', 280.00),
-('c1_6.jpg', 'c1_6 name', 120.00),
-('c1_7.jpg', 'c1_7 name', 100.00),
-('c1_8.jpg', 'c1_8 name', 90.00),
+-- 1. First insert the categories (if not already exists)
+INSERT IGNORE INTO categories (category_id, name, description) VALUES
+(1, 'Smartphones', 'Latest smartphone models'),
+(2, 'Accessories', 'Cases, chargers, and other accessories');
 
--- Category 2 Products
-('c2_1.jpg', 'c2_1 name', 610.00),
-('c2_2.jpg', 'c2_2 name', 600.00),
-('c2_3.jpg', 'c2_3 name', 590.00),
-('c2_4.jpg', 'c2_4 name', 400.00),
-('c2_5.jpg', 'c2_5 name', 420.00),
-('c2_6.jpg', 'c2_6 name', 300.00),
-('c2_7.jpg', 'c2_7 name', 310.00),
-('c2_8.jpg', 'c2_8 name', 800.00);
+-- 2. Insert realistic smartphone products (Category 1)
+INSERT INTO products (photo, name, price, category_id, description, stock_quantity) VALUES
+-- Smartphones (Category 1)
+('iphone13.jpg', 'iPhone 13', 999.00, 1, '6.1-inch Super Retina XDR display, A15 Bionic chip', 50),
+('samsung_s22.jpg', 'Samsung Galaxy S22', 899.00, 1, 'Dynamic AMOLED 2X, 50MP camera', 40),
+('pixel6.jpg', 'Google Pixel 6', 699.00, 1, 'Tensor chip, 50MP main camera', 30),
+('oneplus10.jpg', 'OnePlus 10 Pro', 799.00, 1, 'Hasselblad camera, 80W fast charging', 25),
+('xiaomi12.jpg', 'Xiaomi 12 Pro', 899.00, 1, '6.73" AMOLED, Snapdragon 8 Gen 1', 20),
+('oppo_findx5.jpg', 'OPPO Find X5', 999.00, 1, 'MariSilicon X imaging NPU', 15),
+('nothing_phone1.jpg', 'Nothing Phone (1)', 499.00, 1, 'Glyph interface, Snapdragon 778G+', 35),
+('asus_rog6.jpg', 'ASUS ROG Phone 6', 1099.00, 1, '165Hz AMOLED, Snapdragon 8+ Gen 1', 10),
 
--- Example Insert into Orders Table
-INSERT INTO orders (customer_id, total) VALUES
-(1, 1230.00);
+-- Accessories (Category 2)
+('airpods_pro.jpg', 'AirPods Pro', 249.00, 2, 'Active noise cancellation, spatial audio', 100),
+('magic_mouse.jpg', 'Magic Mouse', 99.00, 2, 'Multi-touch surface, rechargeable', 75),
+('iphone_case.jpg', 'iPhone Leather Case', 49.00, 2, 'Premium European leather', 120),
+('samsung_cover.jpg', 'Samsung Clear Cover', 29.00, 2, 'Anti-yellowing transparent case', 90),
+('65w_charger.jpg', '65W USB-C Charger', 59.00, 2, 'Fast charging for phones/laptops', 60),
+('car_mount.jpg', 'Car Vent Mount', 19.00, 2, 'One-hand operation, 360° rotation', 200),
+('power_bank.jpg', '20,000mAh Power Bank', 49.00, 2, 'Dual USB-C ports, 18W PD', 80),
+('screen_protector.jpg', 'Tempered Glass (3-Pack)', 15.00, 2, '9H hardness, bubble-free', 150);
 
--- Example Insert into Order_Items Table
-INSERT INTO order_items (order_id, product_id, quantity) VALUES
-(1, 1, 2), -- 2 units of c1_1
-(1, 9, 1), -- 1 unit of c2_1
-(1, 13, 1); -- 1 unit of c2_5
+-- 3. Sample order matching new product IDs
+INSERT INTO orders (customer_id, total, status) VALUES
+(1, 2146.00, 'processing');  -- iPhone 13 + AirPods Pro + 65W Charger
+
+-- 4. Sample order items
+INSERT INTO order_items (order_id, product_id, quantity, unit_price) VALUES
+(1, 1, 1, 999.00),  -- 1 x iPhone 13
+(1, 9, 1, 249.00),  -- 1 x AirPods Pro
+(1, 13, 1, 59.00);  -- 1 x 65W Charger
