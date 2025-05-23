@@ -1,3 +1,15 @@
+<?php
+require_once 'includes/db_connect.php';
+
+// Fetch 8 random products from the database
+try {
+    $stmt = $conn->prepare("SELECT product_id, name, price, photo FROM products ORDER BY RAND() LIMIT 8");
+    $stmt->execute();
+    $topProducts = $stmt->fetchAll(PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+    $topProducts = [];
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -39,29 +51,18 @@
         <a href="#">See All <i class="fas fa-arrow-right"></i></a>
     </div>
     <div class="product-grid">
-        <?php
-        $products = [
-            ["iPhone 13", "$799"],
-            ["Samsung Galaxy S21", "$649"],
-            ["MacBook Pro", "$1299"],
-            ["Sony WH-1000XM4", "$349"],
-            ["Google Pixel 6", "$579"],
-            ["Amazon Echo Dot", "$49"],
-            ["Fitbit Charge 5", "$179"],
-            ["Nintendo Switch", "$299"]
-        ];
-        foreach ($products as $product) {
-            echo "<div class='product-card'>
-                    <div class='product-img'></div>
-                    <div class='product-info'>
-                        <p>{$product[0]}</p>
-                        <span>{$product[1]}</span>
-                    </div>
-                  </div>";
-        }
-        ?>
+        <?php foreach ($topProducts as $product): ?>
+            <a href="product.php?id=<?php echo $product['product_id']; ?>" class="product-card">
+                <div class='product-img'>
+                    <img src="images/products/<?php echo htmlspecialchars($product['photo']); ?>" alt="<?php echo htmlspecialchars($product['name']); ?>" loading="lazy">
+                </div>
+                <div class='product-info'>
+                    <p><?php echo htmlspecialchars($product['name']); ?></p>
+                    <span>$<?php echo number_format($product['price'], 2); ?></span>
+                </div>
+            </a>
+        <?php endforeach; ?>
     </div>
-    <div class="pagination">1 2 3 4 5 <i class="fas fa-angle-right"></i></div>
 </section>
 
 <section class="promo">
@@ -71,27 +72,63 @@
 
 <section class="testimonials">
     <h3>What Our Customers Say</h3>
-    <div class="testimonial-tags">
-        <span><i class="far fa-smile"></i> HappyCustomer</span>
-        <span><i class="fas fa-bullseye"></i> SatisfiedClient</span>
-        <span><i class="fas fa-handshake"></i> TrustedBuyer</span>
-        <span><i class="fas fa-mobile-alt"></i> LoyalUser</span>
-        <span><i class="fas fa-life-ring"></i> FrequentShopper</span>
-        <span><i class="fas fa-redo"></i> RepeatCustomer</span>
-        <span><i class="fas fa-star"></i> ValuedMember</span>
-        <span><i class="fas fa-user"></i> JohnDoe</span>
+    <div class="testimonial-grid">
+        <div class="testimonial-card">
+            <div class="customer-profile">
+                <div class="profile-image">P</div>
+                <div>
+                    <h4>Peter Smith</h4>
+                    <div class="customer-role">Customer</div>
+                </div>
+            </div>
+            <p class="testimonial-text">Amazing products and fast delivery! Will definitely shop again.</p>
+            <div class="rating">★★★★★</div>
+        </div>
+        <div class="testimonial-card">
+            <div class="customer-profile">
+                <div class="profile-image">S</div>
+                <div>
+                    <h4>Sarah Johnson</h4>
+                    <div class="customer-role">Customer</div>
+                </div>
+            </div>
+            <p class="testimonial-text">Best electronics store I've ever shopped at. Great prices!</p>
+            <div class="rating">★★★★★</div>
+        </div>
+        <div class="testimonial-card">
+            <div class="customer-profile">
+                <div class="profile-image">M</div>
+                <div>
+                    <h4>Mike Brown</h4>
+                    <div class="customer-role">Customer</div>
+                </div>
+            </div>
+            <p class="testimonial-text">Excellent customer service and quality products.</p>
+            <div class="rating">★★★★☆</div>
+        </div>
+        <div class="testimonial-card">
+            <div class="customer-profile">
+                <div class="profile-image">L</div>
+                <div>
+                    <h4>Lisa Davis</h4>
+                    <div class="customer-role">Customer</div>
+                </div>
+            </div>
+            <p class="testimonial-text">Quick shipping and everything works perfectly!</p>
+            <div class="rating">★★★★★</div>
+        </div>
     </div>
 </section>
 
-<section class="newsletter">
-    <h3>Stay Updated</h3>
-    <input type="email" placeholder="Enter your email">
-    <button>Subscribe</button>
-    <div class="socials">
-        <i class="fas fa-broadcast-tower"></i>
-        <i class="fas fa-camera"></i>
-        <i class="fas fa-snowflake"></i>
-    </div>
+<section class="newsletter newsletter-site">
+  <div class="newsletter-card">
+    <h3>Subscribe to our Newsletter</h3>
+    <p>Stay up to date with the latest deals and new arrivals. Enter your email below to subscribe to our newsletter.</p>
+    <form class="newsletter-form">
+      <input type="email" placeholder="Enter your email" required>
+      <button type="submit">Subscribe</button>
+    </form>
+  </div>
 </section>
 </main>
 
