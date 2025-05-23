@@ -10,31 +10,18 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
 </head>
 <body>
-<header>
-    <div class="container header-content">
-        <h1 class="logo">ZapCart</h1>
-        <div class="hamburger" id="hamburger"><i class="fas fa-bars"></i></div>
-        <nav id="mobile-nav">
-            <ul class="nav-links">
-                <li>Home</li>
-                <li>Products</li>
-                <li>Deals</li>
-                <li>About</li>
-                <li>Contact</li>
-                <li class="mobile-icons">
-                    <span><i class="fas fa-search"></i></span>
-                    <span><i class="fas fa-user"></i></span>
-                    <span><i class="fas fa-shopping-cart"></i></span>
-                </li>
-            </ul>
-        </nav>
-    </div>
-</header>
+<?php include 'includes/navigation.php'; ?>
 
 <main>
 <section class="hero">
+    <div class="main-banner">
+        <div class="main-banner-overlay"></div>
+        <div class="main-banner-content">
+            <h2>Welcome to ZapCart</h2>
+            <p>Your One-Stop Shop for Electronics</p>
+        </div>
+    </div>
     <h2>Explore Our Products</h2>
-    <div class="main-banner">Main Banner</div>
 </section>
 
 <section class="categories">
@@ -108,15 +95,6 @@
 </section>
 </main>
 
-<footer>
-    <div class="footer-grid">
-        <div>© ZapCart</div>
-        <div>Links</div>
-        <div>Contact</div>
-        <div><button>Sign Up</button></div>
-    </div>
-</footer>
-
-<script src="js/script.js"></script>
+<?php include 'includes/footer.php'; ?>
 </body>
 </html>

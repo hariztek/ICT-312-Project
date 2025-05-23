@@ -1,0 +1,245 @@
+/* Deals Page Styles */
+.deals-page {
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Banner Section */
+.deals-banner {
+    background: linear-gradient(135deg, var(--primary-color), #818cf8);
+    color: var(--white);
+    padding: 3rem 2rem;
+    border-radius: var(--border-radius);
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.banner-content h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.banner-content p {
+    font-size: 1.2rem;
+    opacity: 0.9;
+}
+
+/* Featured Deals Section */
+.featured-deals {
+    margin-bottom: 3rem;
+}
+
+.featured-deals h2 {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    color: var(--text-color);
+}
+
+.deals-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+/* Deal Card Styles */
+.deal-card {
+    background: var(--white);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    transition: var(--transition);
+    position: relative;
+}
+
+.deal-card:hover {
+    transform: translateY(-5px);
+}
+
+.discount-badge {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: var(--primary-color);
+    color: var(--white);
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-weight: bold;
+    z-index: 1;
+}
+
+.deal-image {
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+}
+
+.deal-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: var(--transition);
+}
+
+.deal-card:hover .deal-image img {
+    transform: scale(1.05);
+}
+
+.deal-info {
+    padding: 1.5rem;
+}
+
+.deal-info h3 {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+    color: var(--text-color);
+}
+
+.price-container {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.original-price {
+    color: #9ca3af;
+    text-decoration: line-through;
+    font-size: 0.9rem;
+}
+
+.deal-price {
+    color: var(--primary-color);
+    font-size: 1.3rem;
+    font-weight: bold;
+}
+
+.deal-description {
+    color: var(--text-color);
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+    line-height: 1.4;
+    opacity: 0.8;
+}
+
+.deal-timer {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text-color);
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+    opacity: 0.8;
+}
+
+.deal-actions {
+    display: flex;
+    gap: 1rem;
+}
+
+.view-details {
+    flex: 1;
+    padding: 0.8rem;
+    background: var(--gray);
+    color: var(--text-color);
+    text-decoration: none;
+    border-radius: var(--border-radius);
+    text-align: center;
+    transition: var(--transition);
+}
+
+.view-details:hover {
+    background: #e5e7eb;
+}
+
+.add-to-cart-btn {
+    flex: 1;
+    padding: 0.8rem;
+    background: var(--primary-color);
+    color: var(--white);
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.add-to-cart-btn:hover {
+    background: #4f46e5;
+}
+
+/* Deal Categories Section */
+.deal-categories {
+    margin-top: 3rem;
+}
+
+.deal-categories h2 {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    color: var(--text-color);
+}
+
+.categories-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+}
+
+.category-card {
+    background: var(--white);
+    padding: 1.5rem;
+    border-radius: var(--border-radius);
+    text-decoration: none;
+    color: var(--text-color);
+    text-align: center;
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+}
+
+.category-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.category-card i {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: var(--primary-color);
+}
+
+.category-card span {
+    display: block;
+    font-weight: 500;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .deals-page {
+        padding: 1rem;
+    }
+
+    .banner-content h1 {
+        font-size: 2rem;
+    }
+
+    .deals-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .deal-actions {
+        flex-direction: column;
+    }
+
+    .categories-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+    .categories-grid {
+        grid-template-columns: 1fr;
+    }
+} 
