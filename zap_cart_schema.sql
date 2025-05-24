@@ -1,20 +1,23 @@
--- Create Customers Table with Role and Valid Email Format
+-- Modified Customers Table to include user profile details
 CREATE TABLE customers (
     customer_id INT PRIMARY KEY AUTO_INCREMENT,
-    email VARCHAR(100) NOT NULL UNIQUE CHECK (email LIKE '%@%.com'),
+    first_name VARCHAR(50) NOT NULL, -- Added for user personalization
+    last_name VARCHAR(50) NOT NULL,  -- Added for user personalization
+    email VARCHAR(100) NOT NULL UNIQUE CHECK (email LIKE '%@%.com'), -- Retained and validated format
+    phone VARCHAR(15),               -- Added for contact purposes
+    address TEXT,                    -- Added for delivery/shipping purposes
     password VARCHAR(255) NOT NULL,
     role ENUM('User', 'Admin') NOT NULL DEFAULT 'User'
 );
 
-
--- Create Categories Table
+-- Create Categories Table (unchanged)
 CREATE TABLE categories (
     category_id INT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(50) NOT NULL,
     description TEXT
 );
 
--- Create Products Table
+-- Create Products Table (unchanged)
 CREATE TABLE products (
     product_id INT PRIMARY KEY AUTO_INCREMENT,
     photo VARCHAR(100),
@@ -26,7 +29,7 @@ CREATE TABLE products (
     FOREIGN KEY (category_id) REFERENCES categories(category_id) ON DELETE SET NULL
 );
 
--- Create Orders Table
+-- Create Orders Table (unchanged)
 CREATE TABLE orders (
     order_id INT PRIMARY KEY AUTO_INCREMENT,
     customer_id INT,
@@ -36,7 +39,7 @@ CREATE TABLE orders (
     FOREIGN KEY (customer_id) REFERENCES customers(customer_id) ON DELETE CASCADE
 );
 
--- Create Order Items Table
+-- Create Order Items Table (unchanged)
 CREATE TABLE order_items (
     order_item_id INT PRIMARY KEY AUTO_INCREMENT,
     order_id INT,
@@ -47,7 +50,7 @@ CREATE TABLE order_items (
     FOREIGN KEY (product_id) REFERENCES products(product_id) ON DELETE RESTRICT
 );
 
--- Create Carts Table
+-- Create Carts Table (unchanged)
 CREATE TABLE carts (
     cart_id INT PRIMARY KEY AUTO_INCREMENT,
     customer_id INT,
@@ -55,7 +58,7 @@ CREATE TABLE carts (
     FOREIGN KEY (customer_id) REFERENCES customers(customer_id) ON DELETE CASCADE
 );
 
--- Create Cart Items Table
+-- Create Cart Items Table (unchanged)
 CREATE TABLE cart_items (
     cart_item_id INT PRIMARY KEY AUTO_INCREMENT,
     cart_id INT,
@@ -65,19 +68,18 @@ CREATE TABLE cart_items (
     FOREIGN KEY (product_id) REFERENCES products(product_id) ON DELETE CASCADE
 );
 
--- Insert Sample Customers
-INSERT INTO customers (email, password, role) VALUES
-('user1@something.com', 'user1', 'User'),
-('user2@something.com', 'user2', 'User'),
-('admin@something.com', 'admin', 'Admin');
+-- Insert Sample Customers with full info (UPDATED)
+INSERT INTO customers (first_name, last_name, email, phone, address, password, role) VALUES
+('Ram', 'Kumar', 'user1@gmail.com', '1234567890', '123 Street, City A', 'user1', 'User'),
+('Shyam', 'Shah', 'user2@gmail.com', '0987654321', '456 Avenue, City B', 'user2', 'User'),
+('Hari', 'Kris', 'admin@gmail.com', '1122334455', '789 Boulevard, City C', 'admin', 'Admin');
 
-
--- Insert Categories
+-- Insert Categories (unchanged)
 INSERT INTO categories (name, description) VALUES
 ('Smartphones', 'Latest smartphone models'),
 ('Accessories', 'Cases, chargers, and other accessories');
 
--- Insert Products (Smartphones and Accessories)
+-- Insert Products (unchanged)
 INSERT INTO products (photo, name, price, category_id, description, stock_quantity) VALUES
 ('iphone13.jpg', 'iPhone 13', 999.00, 1, '6.1-inch Super Retina XDR display, A15 Bionic chip', 50),
 ('samsung_s22.jpg', 'Samsung Galaxy S22', 899.00, 1, 'Dynamic AMOLED 2X, 50MP camera', 40),
@@ -96,13 +98,12 @@ INSERT INTO products (photo, name, price, category_id, description, stock_quanti
 ('power_bank.jpg', '20,000mAh Power Bank', 49.00, 2, 'Dual USB-C ports, 18W PD', 80),
 ('screen_protector.jpg', 'Tempered Glass (3-Pack)', 15.00, 2, '9H hardness, bubble-free', 150);
 
--- Insert Orders
+-- Insert Orders (unchanged)
 INSERT INTO orders (customer_id, total, status) VALUES
 (1, 1307.00, 'processing');
 
--- Insert Order Items
+-- Insert Order Items (unchanged)
 INSERT INTO order_items (order_id, product_id, quantity, unit_price) VALUES
-(1, 1, 1, 999.00),   -- iPhone 13
-(1, 9, 1, 249.00),   -- AirPods Pro
-(1, 13, 1, 59.00);   -- 65W Charger
-
+(1, 1, 1, 999.00),
+(1, 9, 1, 249.00),
+(1, 13, 1, 59.00);
